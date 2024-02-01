@@ -1,0 +1,187 @@
+.wrap {
+  min-width:1330px;
+}
+
+// content
+.content {
+  position: relative;
+  width:1330px;
+  // height:calc(100vh - 40px);
+  margin:0 auto;
+  padding-top:90px;
+  padding-left:250px;
+  padding-bottom:40px;
+}
+
+// header
+.header-wrap {
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  background-color: $header-bg;
+  z-index: 11;
+  .header-inner {
+    @include flex-row(row, center, between);
+    height:90px;
+    color:$text-white;
+    margin:0 55px 0 52px;
+    h1 {
+      a {
+        display: block;
+      }
+    }
+    .util-wrap {
+      @include flex-row(row, center, center);
+      ul {
+        @include flex-row(row, center, center);
+        li {
+          margin-left:20px;
+        }
+      }
+      span {
+        font-size:14px;
+        font-weight:bold;
+        padding-left:10px;
+      }
+    }
+  }
+}
+
+// aside
+.aside-wrap {
+  position:fixed;
+  top:90px;
+  left:0;
+  width:250px;
+  height:calc(100vh - 90px);
+  overflow:auto;
+  border-right:1px solid $border-line;
+  background:$bg-white;
+  z-index:10;
+  .first-depth {
+    > ul {
+      > li {
+        position:relative;
+        border-bottom:1px solid $border-line;
+        padding:5px 10px;
+        &.icon-01 {
+          > a {
+            background:url(/assets/images/icon_menu_01.png) 20px center no-repeat;
+          }
+        }
+        &.icon-02 {
+          > a {
+            background:url(/assets/images/icon_menu_02.png) 20px center no-repeat;
+          }
+        }
+        &.icon-03 {
+          > a {
+            background:url(/assets/images/icon_menu_03.png) 20px center no-repeat;
+          }
+        }
+        &.icon-04 {
+          > a {
+            background:url(/assets/images/icon_menu_04.png) 20px center no-repeat;
+          }
+        }
+        &.icon-05 {
+          > a {
+            background:url(/assets/images/icon_menu_05.png) 20px center no-repeat;
+          }
+        }
+        &.icon-06 {
+          > a {
+            background:url(/assets/images/icon_menu_06.png) 20px center no-repeat;
+          }
+        }
+        &.icon-07 {
+          > a {
+            background:url(/assets/images/icon_menu_07.png) 20px center no-repeat;
+          }
+        }
+        &.icon-08 {
+          > a {
+            background:url(/assets/images/icon_menu_08.png) 20px center no-repeat;
+          }
+        }
+        > a {
+          position: relative;
+          font-size:14px; 
+          line-height:40px;
+          padding-left:50px;
+          padding-right:45px;
+          font-weight:bold;
+          &:after {
+            content:'';
+            position:absolute;
+            top:50%;
+            right:13px;
+            width:20px;
+            height:20px;
+            background:url(/assets/images/btn_menu.png) center center no-repeat;
+            @include transition-03;
+            transform:translateY(-50%) rotate(-180deg);
+          }
+        }
+        &.active {
+          > a {
+            &:after {
+              @include transform-y;
+            }
+          }
+          > .second-depth {
+            display:block;
+            > ul {
+              > li {
+                > a {
+                }
+                &.active {
+                  border:1px solid $boder-menu;
+                  border-radius:6px;
+                  background-color:$bg-active;
+                  a {
+                    color:$text-active;
+                    font-weight:bold;
+                    &:before {
+                      background-color:$text-active;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    a {
+      display:block;
+    }
+  }
+  .second-depth {
+    display:none;
+    > ul {
+      > li {
+        border:1px solid $bg-white;
+        border-radius:6px;
+        background-color:$bg-white;
+        > a {
+          position: relative;
+          line-height:39px;
+          padding-left:62px;
+          &:before {
+            content:'';
+            position:absolute;
+            top:50%;
+            left:55px;
+            width:3px;
+            height:3px;
+            background-color:$bg-dot;
+            border-radius:100%;
+            @include transform-y;
+          }
+        }
+      }
+    }
+  }
+}
