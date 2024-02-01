@@ -211,12 +211,14 @@
 	      dataDelete(index, idx) {
 	          this.insertForm.question[index].data.splice(idx, 1);
             delete copyAlldata.isActive;
+
 	      },
 	      questionCopy(index) {
 	          let originalData = this.insertForm.question[index];
 	          let copyAlldata = JSON.parse(JSON.stringify(originalData));
 	          this.insertForm.question.push(copyAlldata);
             delete copyAlldata.isActive;
+						console.log(index)
 	      },
         questionUp(index) {
           if (index > 0) {
@@ -256,6 +258,8 @@
 	      },
 	      questionDelete(index) {
 	          this.insertForm.question.splice(index, 1);
+						this.activeIndex ="";
+						this.activeIndexShow = false;
 	      },
 	      insert: function() {
 	              if (this.insertForm.title ==''||this.insertForm.title ==null ) {
