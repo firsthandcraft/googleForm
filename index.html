@@ -9,8 +9,16 @@
 <link rel="stylesheet" href="/css/style.css">
 <body>  
 <div id="app">
-
+	<div class="tabs-wrap">
+		<button class="btn btn-question" @click="preView = false" :class="{'active' : !preView}">
+			<span >질문</span>
+		</button>
+		<button class="btn btn-preview" @click="preView = true" :class="{'active' : preView}">
+			<span >미리보기</span>
+		</button>
+	</div>
   <div style="width: 800px;margin:100px auto">
+
     <form id="frmInsert" onsubmit="return false;" data-vv-scope="frmInsert">
       <table>
         <colgroup>
@@ -31,23 +39,24 @@
           </tr>
         </tbody>
       </table>
-      <div class="btn-wrap mg-t-20">
-        <button class="btn" @click="questionInsert()">질문추가</button>
-      </div>
-      <div class="btn-wrap mg-t-20" v-show="activeIndexShow">
-        <button type="button" class="btn btn-copy" @click="questionCopy(activeIndex)">
-          복제
-        </button>
-        <button type="button" class="btn btn-delete" @click="questionDelete(activeIndex)">
-          삭제
-        </button>
-        <button type="button" class="btn btn-delete" @click="questionUp(activeIndex)">
-          위로
-        </button>
-        <button type="button" class="btn btn-delete" @click="questionDown(activeIndex)">
-          아래로
-        </button>
-      </div>
+				<div class="btn-wrap mg-t-20 ">
+					<div class="btn-right-wrap">
+						<button class="btn" @click="questionInsert()">질문추가</button>
+						<button type="button" class="btn btn-copy" @click="questionCopy(activeIndex)" v-show="activeIndexShow">
+							복제
+						</button>
+						<button type="button" class="btn btn-delete" @click="questionDelete(activeIndex)" v-show="activeIndexShow">
+							삭제
+						</button>
+						<button type="button" class="btn btn-delete" @click="questionUp(activeIndex)" v-show="activeIndexShow">
+							위로
+						</button>
+						<button type="button" class="btn btn-delete" @click="questionDown(activeIndex)" v-show="activeIndexShow">
+							아래로
+						</button>
+					</div>
+			</div>
+     
       <div class="box-wrap mg-t-20 " :class="{ 'boxActive': item.isActive }" v-for="(item,index) in insertForm.question" v-if="insertForm.question.length > 0" @click="boxActive(index)">
         <div class="flex-center-start">
           <!-- 질문 -->
@@ -137,6 +146,75 @@
       </div>
     </form>
   </div>
+	<!-- 미리보기 -->
+	<div class="group-wrap" v-show="preView">
+
+		<div class="doc-title">
+			<h4 v-if="insertForm.title === ''">제목이 없습니다.</h4>
+			<h4 v-else>{{insertForm.title}}</h4>
+		</div>
+
+		<div class="top-line">
+			<p>사업 등록에서 신청서를 선택 이후 사업에 관한 설명이 들어갈 화면 입니다.</p>
+		</div>
+
+		<div class="box-wrap mg-t-20" v-for="(item,index) in insertForm.question" v-if="insertForm.question.length > 0">
+			<div class="flex-wrap">
+				<strong v-if="item.title === ''">
+					<h5>질문사항이 없습니다.</h5>
+				</strong>
+				<strong v-else>
+					<h5>{{item.title}}</h5>
+				</strong>
+				<span class="mg-l-5" v-if="item.necessary==true" style="color:red">*</span>
+			</div>
+			<div class="flex-wrap mg-t-20 imgPreview"  v-if="item.img">
+				<img :src="item.img"/>
+			</div>
+			<div class="flex-wrap mg-t-20" v-if="item.contentShow">
+				<p v-html="contentChange(item)">!</p>
+			</div>
+			<div class="flex-wrap mg-t-20">
+				<ul class="flex-width-1">
+					<li v-if="item.type.value == 'ShortAnswer'">
+						<input type="text" class="width-p-100" placeholder="단답형 텍스트">
+					</li>
+					<li v-if="item.type.value == 'Long'">
+						<textarea class="width-p-100">장문형 텍스트</textarea>
+					</li>
+					<li v-if="item.type.value== 'MultipleChoiceQuestions'">
+						<div class="mg-t-10" v-for="(itemOption,idx) in item.data" v-if="item.data.length> 0">
+							<label class="flex-center-start">
+								<input type="radio" :name="'question_' + index">
+								<span class="mg-l-10">{{item.data[idx]}}</span>
+							</label>
+						</div>
+						<div class="mg-t-10" v-if="item.dataEtc">
+							<label class="flex-center-start">
+								<input type="radio" :name="'question_' + index">
+								<span class="mg-l-10">기타</span>
+								<input type="text" class="mg-l-10" placeholder="기타 내용을 입력하세요." disabled>
+							</label>
+						</div>
+					</li>
+					<li v-if="item.type.value == 'CheckBox'">
+						<div class="mg-t-10" v-for="(itemOption,idx) in item.data" v-if="item.data.length> 0">
+							<label class="flex-center-start">
+								<input type="checkbox">
+								<span class="mg-l-10">{{item.data[idx]}}</span>
+							</label>
+						</div>
+						<div class="mg-t-10" v-if="item.dataEtc">
+							<label class="flex-center-start">
+								<input type="checkbox"><span class="mg-l-10">기타</span>
+								<input type="text" class="mg-l-10" placeholder="기타 내용을 입력하세요." disabled>
+							</label>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

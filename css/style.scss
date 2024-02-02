@@ -1,5 +1,5 @@
-@import 'abstracts/variables';
-@import 'abstracts/mixin';
-@import 'abstracts/reset';
-@import 'common/layout';
-@import 'common/contents';
+@import './abstracts/variables';
+@import './abstracts/mixin';
+@import './abstracts/reset';
+@import './common/layout.scss';
+@import './common/contents';
